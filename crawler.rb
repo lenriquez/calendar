@@ -9,12 +9,13 @@ page.css('td').each do |e|
     result << "</tr>\n<tr>"
   end
   if e.name == 'td'
-    p e.name
-    
     result << ' ' + e.to_s
   end
 end
-result = result.gsub(/<.*table.* || <.*tbody.*>/, "");
+
+result.gsub!(/<.*table.*>/, "");
+result.gsub!(/ <\/tbody> | <tbody> /, "");
+result.gsub!(/<thead>.*<\/thead>/m, "");
 
 template = %{
 <!DOCTYPE html>
@@ -36,4 +37,4 @@ template = %{
 </html>
 }
 
-#puts template
+File.write('./index.html', template)
